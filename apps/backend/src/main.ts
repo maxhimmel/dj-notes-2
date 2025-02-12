@@ -1,8 +1,10 @@
 import express from 'express';
 import * as path from 'path';
+import morgan from 'morgan';
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(express.json());
 
