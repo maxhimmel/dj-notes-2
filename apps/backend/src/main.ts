@@ -3,10 +3,16 @@ import * as path from 'path';
 
 const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.json());
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to backend!' });
+});
+
+// Handle all other routes by serving the index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 const port = process.env.PORT || 3333;
