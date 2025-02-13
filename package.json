@@ -4,7 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "npx nx run-many -t=build"
+    "build": "npx nx run-many -t=build",
+    "dev": "npx nx run-many -t=dev"
   },
   "dependencies": {
     "axios": "^1.6.0",
