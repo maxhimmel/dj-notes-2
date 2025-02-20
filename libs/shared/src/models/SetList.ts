@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import { z } from 'zod';
-import { EdgeSchema, EdgeValidation } from './Edge';
-import { TrackSchema, TrackValidation } from './Track';
+import mongoose from "mongoose";
+import { z } from "zod";
+import { EdgeSchema, EdgeValidation } from "./Edge";
+import { TrackSchema, TrackValidation } from "./Track";
 
 export const SetListValidation = z.object({
   name: z.string(),

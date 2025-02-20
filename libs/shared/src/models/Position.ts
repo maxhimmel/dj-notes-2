@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { z } from 'zod';
+import mongoose from "mongoose";
+import { z } from "zod";
 
 export const PositionValidation = z.object({
   x: z.coerce.number(),

@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import { z } from 'zod';
-import { PositionSchema, PositionValidation } from './Position';
-import { SpotifyDataSchema, SpotifyDataValidation } from './SpotifyData';
+import mongoose from "mongoose";
+import { z } from "zod";
+import { PositionSchema, PositionValidation } from "./Position";
+import { SpotifyDataSchema, SpotifyDataValidation } from "./SpotifyData";
 
 export const TrackValidation = z.object({
   nodeId: z.string(),

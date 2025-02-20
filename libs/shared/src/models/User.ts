@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import { z } from 'zod';
-import { SetListSchema, SetListValidation } from './SetList';
+import mongoose from "mongoose";
+import { z } from "zod";
+import { SetListSchema, SetListValidation } from "./SetList";
 
 export const UserValidation = z.object({
   username: z.string(),
@@ -32,11 +32,11 @@ export const UserSchema = new mongoose.Schema<IUser>(
   {
     toJSON: {
       transform: (doc, ret) => {
-        delete ret['password'];
+        delete ret["password"];
         return ret;
       },
     },
   }
 );
 
-export const User = mongoose.model('User', UserSchema);
+export const User = mongoose.model("User", UserSchema);
