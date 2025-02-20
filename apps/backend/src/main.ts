@@ -1,16 +1,37 @@
+import { initTRPC } from '@trpc/server';
+import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
-import * as path from 'path';
 import morgan from 'morgan';
+import path from 'path';
+import { z } from 'zod';
+
+const createContext = ({
+  req,
+  res,
+}: trpcExpress.CreateExpressContextOptions) => ({
+  req,
+  res,
+}); // no context
+type Context = Awaited<ReturnType<typeof createContext>>;
+const t = initTRPC.context<Context>().create();
+
+export const appRouter = t.router({
+  getUser: t.procedure.input(z.string()).query((opts) => {
+    return { id: opts.input, name: 'Bilbo' };
+  }),
+});
 
 const app = express();
-
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../frontend')));
-app.use(express.json());
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to backend!' });
-});
+app.use(
+  '/api',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  })
+);
 
 // Handle all other routes by serving the index.html
 app.get('*', (req, res) => {
@@ -18,7 +39,7 @@ app.get('*', (req, res) => {
 });
 
 const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
 });
-server.on('error', console.error);
+app.on('error', console.error);
