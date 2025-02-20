@@ -1,13 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import path from "path";
-import { apiMiddleware } from "./lib/trpc";
+import appRouter from "./api";
 
 const app = express();
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-app.use("/api", apiMiddleware);
+app.use("/api", appRouter);
 
 // Handle all other routes by serving the index.html
 app.get("*", (req, res) => {
