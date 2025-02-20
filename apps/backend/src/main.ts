@@ -1,37 +1,13 @@
-import { initTRPC } from '@trpc/server';
-import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
-import { z } from 'zod';
-
-const createContext = ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions) => ({
-  req,
-  res,
-}); // no context
-type Context = Awaited<ReturnType<typeof createContext>>;
-const t = initTRPC.context<Context>().create();
-
-export const appRouter = t.router({
-  getUser: t.procedure.input(z.string()).query((opts) => {
-    return { id: opts.input, name: 'Bilbo' };
-  }),
-});
+import { apiMiddleware } from './lib/trpc';
 
 const app = express();
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use(
-  '/api',
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  })
-);
+app.use('/api', apiMiddleware);
 
 // Handle all other routes by serving the index.html
 app.get('*', (req, res) => {
