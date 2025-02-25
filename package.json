@@ -9,6 +9,7 @@
     "start": "node ./dist/apps/backend/main.js"
   },
   "dependencies": {
+    "@auth/express": "^0.8.4",
     "@trpc/server": "^10.45.2",
     "axios": "^1.6.0",
     "express": "^4.21.2",
