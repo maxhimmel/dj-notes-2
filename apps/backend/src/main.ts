@@ -2,13 +2,12 @@ import express from "express";
 import morgan from "morgan";
 import path from "path";
 import appRouter from "./api";
-import { authHandler, authSession } from "./routers/auth";
+import { authHandler } from "./routers/auth";
 
 const app = express();
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-app.use(authSession);
 app.use("/auth/*", authHandler);
 app.use("/api", appRouter);
 

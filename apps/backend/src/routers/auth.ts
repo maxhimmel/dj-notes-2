@@ -1,16 +1,11 @@
-import { ExpressAuth, getSession } from "@auth/express";
+import { ExpressAuth, getSession as getAuthSession } from "@auth/express";
 import Google from "@auth/express/providers/google";
-import { NextFunction, Request, Response } from "express";
+import { Request } from "express";
 
 const PROVIDERS = [Google];
 
 export const authHandler = ExpressAuth({ providers: PROVIDERS });
 
-export async function authSession(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  res.locals.session = await getSession(req, { providers: PROVIDERS });
-  next();
+export function getSession(req: Request) {
+  return getAuthSession(req, { providers: PROVIDERS });
 }
