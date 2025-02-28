@@ -1,0 +1,19 @@
+{
+  "name": "trpc-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/trpc/client/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/trpc/client",
+        "main": "libs/trpc/client/src/index.ts",
+        "tsConfig": "libs/trpc/client/tsconfig.lib.json",
+        "assets": ["libs/trpc/client/*.md"]
+      }
+    }
+  }
+}
