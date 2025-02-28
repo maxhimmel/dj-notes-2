@@ -1,0 +1,19 @@
+{
+  "name": "trpc-frontend",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/trpc/frontend/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/trpc/frontend",
+        "main": "libs/trpc/frontend/src/index.ts",
+        "tsConfig": "libs/trpc/frontend/tsconfig.lib.json",
+        "assets": ["libs/trpc/frontend/*.md"]
+      }
+    }
+  }
+}

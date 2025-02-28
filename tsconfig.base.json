@@ -16,7 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@dj-notes-2/shared": ["libs/shared/src/index.ts"]
+      "@dj-notes-2/shared": ["libs/shared/src/index.ts"],
+      "@trpc/backend": ["libs/trpc/backend/src/index.ts"],
+      "@trpc/frontend": ["libs/trpc/frontend/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
