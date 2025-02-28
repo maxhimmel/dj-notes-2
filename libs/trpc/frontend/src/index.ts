@@ -1,1 +1,1 @@
-// export * from "./lib/trpc-frontend";
+export * from "./trpc";
