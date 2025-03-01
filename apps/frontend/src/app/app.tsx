@@ -9,6 +9,7 @@ export function App() {
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
+        // TODO: Move these into .env vars?
         httpBatchLink({ url: "http://localhost:4200/api" }), //frontend dev
         httpBatchLink({ url: "http://localhost:3333/api" }), //backend dev
       ],
