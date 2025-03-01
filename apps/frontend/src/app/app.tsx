@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "@trpc/frontend";
 import { useState } from "react";
-import Navbar from "../navbar/navbar";
 import { Route, Routes } from "react-router";
 import Home from "../home/home";
+import Navbar from "../navbar/navbar";
 
 export function App() {
   const [queryClient] = useState(() => new QueryClient());
