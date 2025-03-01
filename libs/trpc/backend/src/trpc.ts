@@ -1,6 +1,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { getSession } from "../routers/auth";
+import { getSession } from "./routers/auth";
 
 export async function createContext({
   req,

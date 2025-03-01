@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "defaultConfiguration": "development",
       "options": {
-        "commands": ["npx tsx watch apps/backend/src/main.ts"]
+        "commands": ["npx nx serve backend"]
       }
     },
     "serve": {

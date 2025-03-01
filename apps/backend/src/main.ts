@@ -1,15 +1,28 @@
 import express from "express";
 import morgan from "morgan";
 import path from "path";
-import appRouter from "./api";
-import { authHandler } from "./routers/auth";
+import cors from "cors";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import { appRouter, authHandler, createContext } from "@trpc/backend";
 
 const app = express();
 app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.use("/auth/*", authHandler);
-app.use("/api", appRouter);
+app.use(
+  "/api",
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  })
+);
 
 // Handle all other routes by serving the index.html
 app.get("*", (req, res) => {
