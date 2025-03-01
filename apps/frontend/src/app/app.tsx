@@ -2,7 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "@trpc/frontend";
 import { useState } from "react";
-import { Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
+import SessionProvider from "../auth/sessionProvider";
 import Home from "../home/home";
 import Navbar from "../navbar/navbar";
 
@@ -19,14 +20,18 @@ export function App() {
   );
 
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <Navbar />
-        <Routes>
-          <Route index element={<Home />}></Route>
-        </Routes>
-      </QueryClientProvider>
-    </trpc.Provider>
+    <BrowserRouter>
+      <SessionProvider>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <QueryClientProvider client={queryClient}>
+            <Navbar />
+            <Routes>
+              <Route index element={<Home />}></Route>
+            </Routes>
+          </QueryClientProvider>
+        </trpc.Provider>
+      </SessionProvider>
+    </BrowserRouter>
   );
 }
 
