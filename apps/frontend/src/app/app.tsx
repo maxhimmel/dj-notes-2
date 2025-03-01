@@ -9,8 +9,9 @@ export function App() {
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
-        httpBatchLink({ url: "http://localhost:3333" }),
-        httpBatchLink({ url: "http://localhost:4200" }),
+        httpBatchLink({
+          url: "http://localhost:3333/api",
+        }),
       ],
     })
   );
