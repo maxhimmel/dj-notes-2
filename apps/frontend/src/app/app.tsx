@@ -1,5 +1,3 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "@trpc/frontend";
 import { BrowserRouter, Route, Routes } from "react-router";
 import SessionProvider from "../auth/sessionProvider";
 import Home from "../home/home";
