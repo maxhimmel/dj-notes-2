@@ -1,4 +1,40 @@
+@import "@xyflow/react/dist/style.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.react-flow__edge-path {
+  stroke: var(--color-primary);
+  stroke-width: 2px;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge.selectable:focus .react-flow__edge-path,
+.react-flow__edge.selectable:focus-visible .react-flow__edge-path {
+  stroke: var(--color-secondary);
+  stroke-width: 2px;
+}
+
+.react-flow__background {
+  background-color: var(--color-base-200);
+
+  pattern {
+    stroke: var(--color-primary);
+  }
+}
