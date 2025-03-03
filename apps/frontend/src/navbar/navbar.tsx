@@ -1,10 +1,11 @@
+import { MdQueueMusic } from "react-icons/md";
+import { Link, NavLink } from "react-router";
 import { useSession } from "../auth/sessionProvider";
 import SignedIn from "../auth/signedIn";
 import SignedOut from "../auth/signedOut";
-import { Link } from "react-router";
 
 export default function Navbar() {
-  const { signIn, signOut } = useSession();
+  const { session, signIn, signOut } = useSession();
 
   return (
     <div className="navbar bg-base-300 text-base-content">
@@ -12,6 +13,17 @@ export default function Navbar() {
         <Link to="/" className="btn btn-ghost text-xl">
           Scratch Notes
         </Link>
+        {session ? (
+          <NavLink
+            to="/setlists"
+            end
+            className={({ isActive }) =>
+              isActive ? "hidden" : "btn btn-secondary"
+            }
+          >
+            My Sets <MdQueueMusic className="size-6" />
+          </NavLink>
+        ) : null}
       </div>
       <div className="flex-none">
         <SignedOut>
