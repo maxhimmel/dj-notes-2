@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { z } from "zod";
-import { SetListSchema, SetListValidation } from "./SetList";
+import { SetListSchema, SetListValidation } from "./setList";
 
 export const UserValidation = z.object({
   username: z.string(),
