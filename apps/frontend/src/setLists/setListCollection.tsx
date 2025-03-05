@@ -111,7 +111,7 @@ function SetListEntry(props: {
     await props.deleteSet(props.entry.id);
   }
 
-  const modified = new Date(props.entry.updatedAt);
+  const modified = props.entry.updatedAt;
 
   return (
     <tr className="cursor-pointer hover:!bg-base-300" onClick={handleEdit}>
