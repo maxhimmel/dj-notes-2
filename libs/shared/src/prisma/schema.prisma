@@ -7,48 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type UsersSetLists {
-  id        String                @map("_id") @db.ObjectId
-  createdAt DateTime              @db.Date
-  edges     UsersSetListsEdges[]
+type SetList {
+  id        String   @map("_id") @db.ObjectId
+  createdAt DateTime @db.Date
+  edges     Edge[]
   name      String
-  tracks    UsersSetListsTracks[]
-  updatedAt DateTime              @db.Date
+  tracks    Track[]
+  updatedAt DateTime @db.Date
 }
 
-type UsersSetListsEdges {
+type Edge {
   id     String @map("_id") @db.ObjectId
   edgeId String
   source String
   target String
 }
 
-type UsersSetListsTracks {
-  id           String                           @map("_id") @db.ObjectId
+type Track {
+  id           String        @map("_id") @db.ObjectId
   artist       String
   nodeId       String
-  position     UsersSetListsTracksPosition
-  spotifyTrack UsersSetListsTracksSpotifyTrack?
+  position     Position
+  spotifyTrack SpotifyTrack?
   title        String
 }
 
-type UsersSetListsTracksPosition {
+type Position {
   id String @map("_id") @db.ObjectId
   x  Float
   y  Float
 }
 
-type UsersSetListsTracksSpotifyTrack {
+type SpotifyTrack {
   id        String @map("_id") @db.ObjectId
   albumImg  String
   spotifyId String
 }
 
-model Users {
-  id       String          @id @default(auto()) @map("_id") @db.ObjectId
-  v        Int             @map("__v")
-  email    String          @unique(map: "email_1")
+model User {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  v        Int       @map("__v")
+  email    String    @unique()
   password String
-  setLists UsersSetLists[]
-  username String          @unique(map: "username_1")
+  setLists SetList[]
+  username String    @unique()
+
+  @@map("Users")
 }
