@@ -25,10 +25,15 @@ export const setListRouter = createRouter({
     return { setLists };
   }),
 
-  getSetList: protectedProcedure
+  getSet: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
-      return { id: input, name: "Bilbo" };
+    .query(async ({ ctx, input }) => {
+      const user = ctx.session.user;
+      const setList = await ctx.db.setList.findUniqueOrThrow({
+        where: { id: input.id, userId: user.id },
+      });
+
+      return { setList };
     }),
 
   delete: protectedProcedure
