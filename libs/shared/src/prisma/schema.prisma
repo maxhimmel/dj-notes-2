@@ -44,7 +44,7 @@ type UsersSetListsTracksSpotifyTrack {
   spotifyId String
 }
 
-model users {
+model Users {
   id       String          @id @default(auto()) @map("_id") @db.ObjectId
   v        Int             @map("__v")
   email    String          @unique(map: "email_1")
