@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { getSession } from "./routers/auth";
+import { prisma } from "@dj-notes-2/shared";
 
 export async function createContext({
   req,
@@ -12,6 +13,7 @@ export async function createContext({
     req,
     res,
     session,
+    db: prisma,
   };
 }
 type Context = Awaited<ReturnType<typeof createContext>>;
