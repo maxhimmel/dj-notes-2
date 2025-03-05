@@ -11,6 +11,9 @@ import { Request } from "express";
 const CONFIG: ExpressAuthConfig = {
   providers: [Google],
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    session: ({ session }) => session,
+  },
 };
 
 export const authHandler = ExpressAuth(CONFIG);
