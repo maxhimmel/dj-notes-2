@@ -1,4 +1,2 @@
-export * from "./models/track";
-export * from "./models/setList";
-export * from "./models/timestamps";
+export { SetList } from "@prisma/client";
 export { prisma } from "./prisma/prisma";
