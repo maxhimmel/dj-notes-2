@@ -1,16 +1,23 @@
-import { ExpressAuth, getSession as getAuthSession } from "@auth/express";
+import {
+  ExpressAuth,
+  ExpressAuthConfig,
+  getSession as getAuthSession,
+} from "@auth/express";
 import Google from "@auth/express/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@dj-notes-2/shared";
 import { Request } from "express";
 
-const PROVIDERS = [Google];
-
-export const authHandler = ExpressAuth({
-  providers: PROVIDERS,
+const CONFIG: ExpressAuthConfig = {
+  providers: [Google],
   adapter: PrismaAdapter(prisma),
-});
+  callbacks: {
+    session: ({ session }) => session,
+  },
+};
+
+export const authHandler = ExpressAuth(CONFIG);
 
 export function getSession(req: Request) {
-  return getAuthSession(req, { providers: PROVIDERS });
+  return getAuthSession(req, CONFIG);
 }

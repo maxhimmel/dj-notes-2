@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "@trpc/frontend";
 import { PropsWithChildren, useState } from "react";
+import superjson from "superjson";
 
 export default function TrpcProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
@@ -12,6 +13,7 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
         httpBatchLink({ url: "http://localhost:4200/api" }), //frontend dev
         httpBatchLink({ url: "http://localhost:3333/api" }), //backend dev
       ],
+      transformer: superjson,
     })
   );
 
