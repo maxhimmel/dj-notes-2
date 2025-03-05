@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { trpc } from "@trpc/frontend";
 import { useEffect, useState } from "react";
 import {
@@ -6,6 +7,8 @@ import {
   RiSparkling2Fill,
 } from "react-icons/ri";
 import { useNavigate } from "react-router";
+
+type SetList = Prisma.SetListGetPayload<{ include: { user: false } }>;
 
 export default function SetListCollection() {
   const getSets = trpc.setLists.getSets.useQuery();
