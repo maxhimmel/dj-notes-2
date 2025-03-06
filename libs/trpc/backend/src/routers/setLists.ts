@@ -49,7 +49,13 @@ export const setListRouter = createRouter({
 
   update: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return { id: input, name: "Bilbo" };
+    .mutation(async ({ ctx, input }) => {
+      const user = ctx.session.user;
+      const setList = await ctx.db.setList.update({
+        where: { id: input.id, userId: user.id },
+        data: {},
+      });
+
+      return { setList };
     }),
 });
