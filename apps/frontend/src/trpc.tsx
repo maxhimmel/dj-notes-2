@@ -11,7 +11,7 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
       links: [
         // TODO: Move these into .env vars?
         httpBatchLink({ url: "http://localhost:4200/api" }), //frontend dev
-        httpBatchLink({ url: "http://localhost:3333/api" }), //backend dev
+        httpBatchLink({ url: "https://dj-notes-2.onrender.com/api" }), //prod
       ],
       transformer: superjson,
     })
