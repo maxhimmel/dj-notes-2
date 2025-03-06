@@ -15,7 +15,7 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-app.use("/auth/*", authHandler);
+app.use("/api/auth/*", authHandler);
 app.use(
   "/api",
   trpcExpress.createExpressMiddleware({

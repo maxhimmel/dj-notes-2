@@ -13,7 +13,7 @@ export default function Home() {
 }
 
 function SplashContent() {
-  const { session } = useSession();
+  const { session, signIn } = useSession();
 
   return (
     <div className="grid grid-flow-col grid-cols-2 gap-10 h-full pl-15">
@@ -27,9 +27,9 @@ function SplashContent() {
             Or take it with you during your next show so you don't get lost!
           </p>
           {!session ? (
-            <Link to="/auth/signup" className="btn btn-secondary">
+            <button onClick={signIn} className="btn btn-secondary">
               Get Started
-            </Link>
+            </button>
           ) : null}
         </div>
       </div>

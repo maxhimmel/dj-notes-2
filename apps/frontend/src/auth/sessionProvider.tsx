@@ -12,8 +12,8 @@ const defaultState = {
   setSession: (session: Session | null) => {
     // This method will be assigned by useState
   },
-  signIn: () => (window.location.href = "/auth/signin"),
-  signOut: () => (window.location.href = "/auth/signout"),
+  signIn: () => (window.location.href = "/api/auth/signin"),
+  signOut: () => (window.location.href = "/api/auth/signout"),
 };
 const context = createContext(defaultState);
 
@@ -43,6 +43,6 @@ export default function SessionProvider({ children }: PropsWithChildren) {
 }
 
 async function getSession(): Promise<Session | null> {
-  const response = await fetch("/auth/session");
+  const response = await fetch("/api/auth/session");
   return await response.json();
 }

@@ -12,7 +12,6 @@ export default defineConfig({
     host: "localhost",
     proxy: {
       "/api": "http://localhost:3333",
-      "/auth": "http://localhost:3333",
     },
   },
   preview: {
