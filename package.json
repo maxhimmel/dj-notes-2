@@ -7,6 +7,7 @@
     "build": "npx nx run-many -t=build",
     "clean": "rm -rf ./node_modules ./.nx ./dist",
     "dev": "npx nx run-many -t=dev",
+    "postinstall": "echo 'hello world'",
     "start": "node ./dist/apps/backend/main.js"
   },
   "dependencies": {
