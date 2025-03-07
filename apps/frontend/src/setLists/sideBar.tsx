@@ -4,11 +4,13 @@ import { BsVinylFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 import { useDnD } from "../dragDrop/dndProvider";
+import { trpc } from "@trpc/frontend";
 
 export function SideBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Track[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const searchTrack = trpc.tracks.search.useQuery({ query });
 
   async function handleSearch(evt: FormEvent) {
     evt.preventDefault();
@@ -16,7 +18,7 @@ export function SideBar() {
     setIsPending(true);
     setResults([]);
 
-    const results = await tracksService.searchTracks(query);
+    const results = (await searchTrack.data?.tracks) ?? [];
 
     setIsPending(false);
     setResults(results);
