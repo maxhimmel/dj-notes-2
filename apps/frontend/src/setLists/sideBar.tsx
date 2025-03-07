@@ -139,7 +139,14 @@ function CustomEntry() {
   const { setType } = useDnD();
 
   function onDragStart(event: DragEvent) {
-    setType({ data: null });
+    setType({
+      data: {
+        id: "",
+        artist: "",
+        title: "",
+        spotifyTrack: null,
+      },
+    });
     event.dataTransfer.effectAllowed = "move";
   }
 

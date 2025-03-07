@@ -3,7 +3,7 @@ import { TrackData } from "../nodes/trackData";
 
 type DragType = {
   // type: string;
-  data: TrackData | null;
+  data: TrackData;
 };
 
 const DnDContext = createContext({
