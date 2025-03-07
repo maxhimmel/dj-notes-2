@@ -5,7 +5,7 @@ export default function SpotifyNode({ id, data, selected }: TrackProps) {
   return (
     <BaseNode selected={selected}>
       <figure>
-        <img src={data.spotifyData?.albumImg} alt="Album" />
+        <img src={data.spotifyTrack?.albumImg} alt="Album" />
       </figure>
       <div className="card-body p-4">
         <h2 className="card-title">{data.title}</h2>
