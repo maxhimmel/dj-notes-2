@@ -9,8 +9,8 @@ import Notification from "./notification";
 type FileState = "saved" | "saving" | "changed" | "";
 
 export function FileBar(props: {
-  originalSetList: SetList | null;
-  setList: SetList | null;
+  originalSetList: SetList | undefined;
+  setList: SetList | undefined;
   setSetList: (setList: SetList) => void;
 }) {
   const { originalSetList, setList } = props;
