@@ -84,9 +84,9 @@ function SetList() {
         ...setList,
         tracks: nodes.map((n) => {
           return {
-            id: "",
+            id: n.data.id,
             nodeId: n.id,
-            position: n.position,
+            position: { ...n.position, id: "" },
             title: n.data.title,
             artist: n.data.artist,
             spotifyTrack: n.data.spotifyTrack,
