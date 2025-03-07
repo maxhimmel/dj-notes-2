@@ -2,8 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import SessionProvider from "../auth/sessionProvider";
 import Home from "../home/home";
 import Navbar from "../navbar/navbar";
-import TrpcProvider from "../trpc";
+import SetList from "../setLists/setList";
 import SetListCollection from "../setLists/setListCollection";
+import TrpcProvider from "../trpc";
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
           <Routes>
             <Route index element={<Home />}></Route>
             <Route path="/setlists" element={<SetListCollection />}></Route>
+            <Route path="/setlists/:id" element={<SetList />}></Route>
           </Routes>
         </TrpcProvider>
       </SessionProvider>
