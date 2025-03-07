@@ -7,6 +7,7 @@ import {
   RiSparkling2Fill,
 } from "react-icons/ri";
 import { useNavigate } from "react-router";
+import { useSetList } from "./setListProvider";
 
 export default function SetListCollection() {
   const getSets = trpc.setLists.getSets.useQuery();
@@ -61,13 +62,16 @@ export default function SetListCollection() {
 
 function NewSetListButton() {
   const navigate = useNavigate();
+  const { setSetList } = useSetList();
   const createSetList = trpc.setLists.create.useMutation();
 
   async function handleNewSetList() {
     const { setList } = await createSetList.mutateAsync({
       name: "New Set List",
     });
-    navigate(`/setlists/${setList.id}`, { state: setList });
+
+    setSetList(setList);
+    navigate(`/setlists/${setList.id}`);
   }
   return (
     <button onClick={handleNewSetList} className="btn btn-secondary">
@@ -100,11 +104,11 @@ function SetListEntry(props: {
   deleteSet: (id: string) => Promise<void>;
 }) {
   const navigate = useNavigate();
+  const { setSetList } = useSetList();
 
   function handleEdit() {
-    navigate(`/setlists/${props.entry.id}`, {
-      state: props.entry,
-    });
+    setSetList(props.entry);
+    navigate(`/setlists/${props.entry.id}`);
   }
 
   async function handleDelete(evt: React.MouseEvent) {
