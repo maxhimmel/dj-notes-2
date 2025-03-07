@@ -30,7 +30,17 @@ import TrackNode from "../nodes/trackNode";
 import UserTrackNode from "../nodes/userNode";
 import { SideBar } from "./sidebar";
 
-function SetList() {
+export default function Component() {
+  return (
+    <ReactFlowProvider>
+      <DnDProvider>
+        <SetListComponent />
+      </DnDProvider>
+    </ReactFlowProvider>
+  );
+}
+
+function SetListComponent() {
   const flowInstance = useReactFlow();
   const flowWrapper = useRef<HTMLDivElement>(null);
 
@@ -161,19 +171,9 @@ function SetList() {
   );
 }
 
-export default function Component() {
-  return (
-    <ReactFlowProvider>
-      <DnDProvider>
-        <SetList />
-      </DnDProvider>
-    </ReactFlowProvider>
-  );
-}
-
 /* --- */
 
-export function toReactFlowNodes(setList: SetList | undefined): TrackType[] {
+function toReactFlowNodes(setList: SetList | undefined): TrackType[] {
   if (!setList) {
     return [];
   }
@@ -188,7 +188,7 @@ export function toReactFlowNodes(setList: SetList | undefined): TrackType[] {
   });
 }
 
-export function toReactFlowEdges(setList: SetList | undefined): Edge[] {
+function toReactFlowEdges(setList: SetList | undefined): Edge[] {
   if (!setList) {
     return [];
   }
