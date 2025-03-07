@@ -1,9 +1,9 @@
-import { Track } from "@dj-notes-2/shared";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { TrackData } from "../nodes/trackData";
 
 type DragType = {
   // type: string;
-  data: Omit<Track, "position" | "nodeId"> | null;
+  data: TrackData | null;
 };
 
 const DnDContext = createContext({
