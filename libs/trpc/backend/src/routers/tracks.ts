@@ -9,8 +9,12 @@ const spotifyApi = SpotifyApi.withClientCredentials(
 
 export const trackRouter = createRouter({
   search: protectedProcedure
-    .input(z.object({ query: z.string() }))
+    .input(z.object({ query: z.string().optional() }))
     .query(async ({ input }) => {
+      if (!input.query) {
+        return { tracks: [] };
+      }
+
       const results = await spotifyApi.search(input.query, ["track"]);
       return { tracks: results.tracks.items };
     }),
