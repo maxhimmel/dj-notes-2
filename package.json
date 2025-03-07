@@ -14,6 +14,7 @@
     "@auth/express": "^0.8.4",
     "@auth/prisma-adapter": "^2.8.0",
     "@prisma/client": "^6.4.1",
+    "@spotify/web-api-ts-sdk": "^1.2.0",
     "@tanstack/react-query": "^4.36.1",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
