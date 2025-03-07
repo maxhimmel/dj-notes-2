@@ -1,5 +1,7 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { SetList } from "@dj-notes-2/shared";
+import { trpc } from "@trpc/frontend";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useParams } from "react-router";
 
 const defaultState = {
   setList: undefined as SetList | undefined,
@@ -12,7 +14,10 @@ const context = createContext(defaultState);
 export const useSetList = () => useContext(context);
 
 export default function SetListProvider({ children }: PropsWithChildren) {
-  const [setList, setSetList] = useState<SetList | undefined>(undefined);
+  const { id } = useParams<"id">();
+  const getSet = trpc.setLists.getSet.useQuery({ id });
+
+  const [setList, setSetList] = useState(getSet.data?.setList);
 
   return (
     <context.Provider
