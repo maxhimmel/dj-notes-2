@@ -102,9 +102,11 @@ function SearchResultEntry(props: { track: Track }) {
   function onDragStart(event: DragEvent) {
     setType({
       data: {
+        id: "",
         title: track.name,
         artist: track.artists.at(0)?.name as string,
         spotifyTrack: {
+          id: "",
           spotifyId: track.id,
           albumImg: track.album.images.reduce((biggest, img) =>
             img.width > biggest.width ? img : biggest
@@ -137,7 +139,7 @@ function CustomEntry() {
   const { setType } = useDnD();
 
   function onDragStart(event: DragEvent) {
-    setType({ data: {} });
+    setType({ data: null });
     event.dataTransfer.effectAllowed = "move";
   }
 

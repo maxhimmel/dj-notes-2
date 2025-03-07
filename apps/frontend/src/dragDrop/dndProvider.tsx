@@ -3,7 +3,7 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 type DragType = {
   // type: string;
-  data: Omit<Track, "position" | "nodeId">;
+  data: Omit<Track, "position" | "nodeId"> | null;
 };
 
 const DnDContext = createContext({
