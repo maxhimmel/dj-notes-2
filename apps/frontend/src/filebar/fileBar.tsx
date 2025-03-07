@@ -44,9 +44,10 @@ export function FileBar(props: {
     evt.preventDefault();
 
     setFileState("saving");
+    const { id, userId, ...payload } = setList;
     const savedSetList = await updateSetList.mutateAsync({
       id: setList.id,
-      setList,
+      setList: payload,
     });
 
     setFileState("saved");
