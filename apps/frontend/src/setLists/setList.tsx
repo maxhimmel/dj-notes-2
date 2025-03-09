@@ -20,7 +20,7 @@ import { TrackData, TrackType } from "../nodes/trackData";
 import TrackNode from "../nodes/trackNode";
 import UserTrackNode from "../nodes/userNode";
 import { useSetList } from "./setListProvider";
-import { SideBar } from "./sidebar";
+import { SideBar } from "./sideBar";
 
 export default function Component() {
   return (
@@ -46,7 +46,7 @@ function SetListComponent() {
     toReactFlowEdges(setList)
   );
 
-  const { type: dragType } = useDnD();
+  const { dragType } = useDnD();
   const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
