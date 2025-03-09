@@ -64,7 +64,7 @@ function SetListComponent() {
         x: event.clientX,
         y: event.clientY,
       });
-      const newNode: Node<TrackData> = {
+      const newNode: TrackType = {
         id: nodes.length.toString(),
         position,
         type: "track",
