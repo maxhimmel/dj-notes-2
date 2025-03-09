@@ -18,7 +18,6 @@ import DnDProvider, { useDnD } from "../dragDrop/dndProvider";
 import { FileBar } from "../filebar/fileBar";
 import { TrackData, TrackType } from "../nodes/trackData";
 import TrackNode from "../nodes/trackNode";
-import UserTrackNode from "../nodes/userNode";
 import { useSetList } from "./setListProvider";
 import { SideBar } from "./sideBar";
 
@@ -36,6 +35,8 @@ function SetListComponent() {
   const flowInstance = useReactFlow();
   const flowWrapper = useRef<HTMLDivElement>(null);
   const { setList, setSetList } = useSetList();
+
+  const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
   // const initialSetList = setList;
   // const [setList, setSetList] = useState<SetList | undefined>(initialSetList);
@@ -111,14 +112,6 @@ function SetListComponent() {
   //     // navigate(location.pathname, { state: setList });
   //   })();
   // }, [nodes, edges]);
-
-  const nodeTypes = useMemo(
-    () => ({
-      userTrack: UserTrackNode,
-      track: TrackNode,
-    }),
-    []
-  );
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
