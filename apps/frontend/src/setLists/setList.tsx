@@ -67,7 +67,7 @@ function SetListComponent() {
         id: nodes.length.toString(),
         position,
         type: "track",
-        data: dragType.data as TrackData,
+        data: dragType.data,
       };
 
       setNodes([...nodes, newNode]);
