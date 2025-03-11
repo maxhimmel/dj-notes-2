@@ -3,20 +3,18 @@ import {
   Background,
   Connection,
   Edge,
-  Node,
   ReactFlow,
   useEdgesState,
   useNodesState,
 } from "@xyflow/react";
 import { useCallback } from "react";
-import { TrackData } from "../nodes/trackData";
+import { TrackType } from "../nodes/trackData";
 import TrackNode from "../nodes/trackNode";
 
 const { NODES, EDGES, NODE_TYPES } = createSampleData();
 
 export function SetListSample() {
-  const [nodes, setNodes, onNodesChange] =
-    useNodesState<Node<TrackData>>(NODES);
+  const [nodes, setNodes, onNodesChange] = useNodesState<TrackType>(NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(EDGES);
 
   const onConnect = useCallback(
@@ -52,26 +50,24 @@ export function SetListSample() {
 }
 
 function createSampleData() {
-  const NODES = [
+  const NODES: TrackType[] = [
     {
       id: "0",
       position: {
         x: -44.13524842260216,
         y: -209.22272213263807,
-        _id: "679bde33882770e6cc508ef9",
       },
       type: "track",
       data: {
-        nodeId: "0",
         title: "LIL DUTCHIE",
         artist: "Zackey Force Funk",
-        spotifyData: {
+        spotifyTrack: {
           spotifyId: "4sb8zLR2LRPoYv02qRyqoa",
           albumImg:
             "https://i.scdn.co/image/ab67616d0000b273b555f20e34e93914d8e13c33",
-          _id: "679bde33882770e6cc508efa",
+          id: "679bde33882770e6cc508efa",
         },
-        _id: "679bde33882770e6cc508ef8",
+        id: "679bde33882770e6cc508ef8",
       },
       measured: {
         width: 208,
@@ -83,20 +79,18 @@ function createSampleData() {
       position: {
         x: -226.32383930435662,
         y: 86.94206559281355,
-        _id: "679bde33882770e6cc508efc",
       },
       type: "track",
       data: {
-        nodeId: "1",
         title: "Love Me Right - XL Middleton Remix",
         artist: "MIA",
-        spotifyData: {
+        spotifyTrack: {
           spotifyId: "3Q4ACYzBdMohplw3DxVeti",
           albumImg:
             "https://i.scdn.co/image/ab67616d0000b273186b5cf4f39c14f7a026365b",
-          _id: "679bde33882770e6cc508efd",
+          id: "679bde33882770e6cc508efd",
         },
-        _id: "679bde33882770e6cc508efb",
+        id: "679bde33882770e6cc508efb",
       },
       measured: {
         width: 208,
@@ -108,20 +102,18 @@ function createSampleData() {
       position: {
         x: 142.7971854699502,
         y: 86.5464758243973,
-        _id: "679bde33882770e6cc508eff",
       },
       type: "track",
       data: {
-        nodeId: "2",
         title: "Stone Love",
         artist: "Kashif",
-        spotifyData: {
+        spotifyTrack: {
           spotifyId: "2wPJBZ7o4a1TurmrgmNEUK",
           albumImg:
             "https://i.scdn.co/image/ab67616d0000b273658c72f04961c635653a5a81",
-          _id: "679bde33882770e6cc508f00",
+          id: "679bde33882770e6cc508f00",
         },
-        _id: "679bde33882770e6cc508efe",
+        id: "679bde33882770e6cc508efe",
       },
       measured: {
         width: 208,
@@ -133,20 +125,18 @@ function createSampleData() {
       position: {
         x: -170.22298831820993,
         y: 382.0915852247382,
-        _id: "679bde33882770e6cc508f02",
       },
       type: "track",
       data: {
-        nodeId: "3",
         title: "Funktown Nights",
         artist: "E. Live",
-        spotifyData: {
+        spotifyTrack: {
           spotifyId: "1dZ1GPgg5KSgbcgBTQwVR7",
           albumImg:
             "https://i.scdn.co/image/ab67616d0000b273a1c2bb45aab86c4ac5508778",
-          _id: "679bde33882770e6cc508f03",
+          id: "679bde33882770e6cc508f03",
         },
-        _id: "679bde33882770e6cc508f01",
+        id: "679bde33882770e6cc508f01",
       },
       measured: {
         width: 208,
