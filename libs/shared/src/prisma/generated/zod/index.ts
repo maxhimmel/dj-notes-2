@@ -139,7 +139,6 @@ export type Authenticator = z.infer<typeof AuthenticatorSchema>
 /////////////////////////////////////////
 
 export const EdgeSchema = z.object({
-  id: z.string(),
   edgeId: z.string(),
   source: z.string(),
   target: z.string(),
@@ -155,7 +154,6 @@ export type Edge = z.infer<typeof EdgeSchema>
 /////////////////////////////////////////
 
 export const TrackSchema = z.object({
-  id: z.string(),
   artist: z.string(),
   nodeId: z.string(),
   title: z.string(),
@@ -171,7 +169,6 @@ export type Track = z.infer<typeof TrackSchema>
 /////////////////////////////////////////
 
 export const PositionSchema = z.object({
-  id: z.string(),
   x: z.number(),
   y: z.number(),
 })
@@ -186,7 +183,6 @@ export type Position = z.infer<typeof PositionSchema>
 /////////////////////////////////////////
 
 export const SpotifyTrackSchema = z.object({
-  id: z.string(),
   albumImg: z.string(),
   spotifyId: z.string(),
 })
@@ -351,7 +347,6 @@ export const EdgeArgsSchema: z.ZodType<Prisma.EdgeDefaultArgs> = z.object({
 }).strict();
 
 export const EdgeSelectSchema: z.ZodType<Prisma.EdgeSelect> = z.object({
-  id: z.boolean().optional(),
   edgeId: z.boolean().optional(),
   source: z.boolean().optional(),
   target: z.boolean().optional(),
@@ -369,7 +364,6 @@ export const TrackArgsSchema: z.ZodType<Prisma.TrackDefaultArgs> = z.object({
 }).strict();
 
 export const TrackSelectSchema: z.ZodType<Prisma.TrackSelect> = z.object({
-  id: z.boolean().optional(),
   artist: z.boolean().optional(),
   nodeId: z.boolean().optional(),
   position: z.union([z.boolean(),z.lazy(() => PositionArgsSchema)]).optional(),
@@ -385,7 +379,6 @@ export const PositionArgsSchema: z.ZodType<Prisma.PositionDefaultArgs> = z.objec
 }).strict();
 
 export const PositionSelectSchema: z.ZodType<Prisma.PositionSelect> = z.object({
-  id: z.boolean().optional(),
   x: z.boolean().optional(),
   y: z.boolean().optional(),
 }).strict()
@@ -398,7 +391,6 @@ export const SpotifyTrackArgsSchema: z.ZodType<Prisma.SpotifyTrackDefaultArgs> =
 }).strict();
 
 export const SpotifyTrackSelectSchema: z.ZodType<Prisma.SpotifyTrackSelect> = z.object({
-  id: z.boolean().optional(),
   albumImg: z.boolean().optional(),
   spotifyId: z.boolean().optional(),
 }).strict()
@@ -1362,7 +1354,6 @@ export const EdgeCompositeListFilterSchema: z.ZodType<Prisma.EdgeCompositeListFi
 }).strict();
 
 export const EdgeObjectEqualityInputSchema: z.ZodType<Prisma.EdgeObjectEqualityInput> = z.object({
-  id: z.string(),
   edgeId: z.string(),
   source: z.string(),
   target: z.string()
@@ -1378,7 +1369,6 @@ export const TrackCompositeListFilterSchema: z.ZodType<Prisma.TrackCompositeList
 }).strict();
 
 export const TrackObjectEqualityInputSchema: z.ZodType<Prisma.TrackObjectEqualityInput> = z.object({
-  id: z.string(),
   artist: z.string(),
   nodeId: z.string(),
   position: z.lazy(() => PositionObjectEqualityInputSchema),
@@ -1824,7 +1814,6 @@ export const EdgeListCreateEnvelopeInputSchema: z.ZodType<Prisma.EdgeListCreateE
 }).strict();
 
 export const EdgeCreateInputSchema: z.ZodType<Prisma.EdgeCreateInput> = z.object({
-  id: z.string(),
   edgeId: z.string(),
   source: z.string(),
   target: z.string()
@@ -1835,7 +1824,6 @@ export const TrackListCreateEnvelopeInputSchema: z.ZodType<Prisma.TrackListCreat
 }).strict();
 
 export const TrackCreateInputSchema: z.ZodType<Prisma.TrackCreateInput> = z.object({
-  id: z.string(),
   artist: z.string(),
   nodeId: z.string(),
   position: z.lazy(() => PositionCreateInputSchema),
@@ -2149,7 +2137,6 @@ export const EdgeWhereInputSchema: z.ZodType<Prisma.EdgeWhereInput> = z.object({
   AND: z.union([ z.lazy(() => EdgeWhereInputSchema),z.lazy(() => EdgeWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => EdgeWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => EdgeWhereInputSchema),z.lazy(() => EdgeWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   edgeId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   source: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   target: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
@@ -2159,7 +2146,6 @@ export const TrackWhereInputSchema: z.ZodType<Prisma.TrackWhereInput> = z.object
   AND: z.union([ z.lazy(() => TrackWhereInputSchema),z.lazy(() => TrackWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TrackWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => TrackWhereInputSchema),z.lazy(() => TrackWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   artist: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   nodeId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   position: z.union([ z.lazy(() => PositionCompositeFilterSchema),z.lazy(() => PositionObjectEqualityInputSchema) ]).optional(),
@@ -2168,13 +2154,11 @@ export const TrackWhereInputSchema: z.ZodType<Prisma.TrackWhereInput> = z.object
 }).strict();
 
 export const PositionObjectEqualityInputSchema: z.ZodType<Prisma.PositionObjectEqualityInput> = z.object({
-  id: z.string(),
   x: z.number(),
   y: z.number()
 }).strict();
 
 export const SpotifyTrackObjectEqualityInputSchema: z.ZodType<Prisma.SpotifyTrackObjectEqualityInput> = z.object({
-  id: z.string(),
   albumImg: z.string(),
   spotifyId: z.string()
 }).strict();
@@ -2363,13 +2347,11 @@ export const NestedBoolWithAggregatesFilterSchema: z.ZodType<Prisma.NestedBoolWi
 }).strict();
 
 export const PositionCreateInputSchema: z.ZodType<Prisma.PositionCreateInput> = z.object({
-  id: z.string(),
   x: z.number(),
   y: z.number()
 }).strict();
 
 export const SpotifyTrackCreateInputSchema: z.ZodType<Prisma.SpotifyTrackCreateInput> = z.object({
-  id: z.string(),
   albumImg: z.string(),
   spotifyId: z.string()
 }).strict();
@@ -2913,14 +2895,12 @@ export const SpotifyTrackNullableCompositeFilterSchema: z.ZodType<Prisma.Spotify
 }).strict();
 
 export const EdgeUpdateInputSchema: z.ZodType<Prisma.EdgeUpdateInput> = z.object({
-  id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   edgeId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   source: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   target: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const TrackUpdateInputSchema: z.ZodType<Prisma.TrackUpdateInput> = z.object({
-  id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   artist: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   nodeId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   position: z.union([ z.lazy(() => PositionUpdateEnvelopeInputSchema),z.lazy(() => PositionCreateInputSchema) ]).optional(),
@@ -3092,7 +3072,6 @@ export const PositionWhereInputSchema: z.ZodType<Prisma.PositionWhereInput> = z.
   AND: z.union([ z.lazy(() => PositionWhereInputSchema),z.lazy(() => PositionWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PositionWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => PositionWhereInputSchema),z.lazy(() => PositionWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   x: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   y: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
 }).strict();
@@ -3101,7 +3080,6 @@ export const SpotifyTrackWhereInputSchema: z.ZodType<Prisma.SpotifyTrackWhereInp
   AND: z.union([ z.lazy(() => SpotifyTrackWhereInputSchema),z.lazy(() => SpotifyTrackWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => SpotifyTrackWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => SpotifyTrackWhereInputSchema),z.lazy(() => SpotifyTrackWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   albumImg: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   spotifyId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
@@ -3129,7 +3107,6 @@ export const FloatFilterSchema: z.ZodType<Prisma.FloatFilter> = z.object({
 }).strict();
 
 export const PositionUpdateInputSchema: z.ZodType<Prisma.PositionUpdateInput> = z.object({
-  id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   x: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   y: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -3148,7 +3125,6 @@ export const FloatFieldUpdateOperationsInputSchema: z.ZodType<Prisma.FloatFieldU
 }).strict();
 
 export const SpotifyTrackUpdateInputSchema: z.ZodType<Prisma.SpotifyTrackUpdateInput> = z.object({
-  id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   albumImg: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   spotifyId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();

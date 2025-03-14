@@ -24,14 +24,12 @@ model SetList {
 }
 
 type Edge {
-  id     String @map("_id") @db.ObjectId
   edgeId String
   source String
   target String
 }
 
 type Track {
-  id           String        @map("_id") @db.ObjectId
   artist       String
   nodeId       String
   position     Position
@@ -40,13 +38,11 @@ type Track {
 }
 
 type Position {
-  id String @map("_id") @db.ObjectId
-  x  Float
-  y  Float
+  x Float
+  y Float
 }
 
 type SpotifyTrack {
-  id        String @map("_id") @db.ObjectId
   albumImg  String
   spotifyId String
 }
