@@ -39,7 +39,7 @@ export default function SetListProvider({ children }: PropsWithChildren) {
         if (!prevSetListState) {
           const setList = (await getSet.fetch({ id }))?.setList;
           console.log("SLP", "setting initial set list", setList);
-          setSetList(setList ? { ...setList } : undefined);
+          setSetList(setList);
           setPrevSetListState(setList);
         }
       } else {

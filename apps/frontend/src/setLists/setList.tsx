@@ -38,15 +38,19 @@ function SetListComponent() {
 
   const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
-  // const initialSetList = setList;
-  // const [setList, setSetList] = useState<SetList | undefined>(initialSetList);
-  console.log("MOUNT", setList);
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<TrackData>>(
     toReactFlowNodes(setList)
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
     toReactFlowEdges(setList)
   );
+
+  useEffect(() => {
+    setNodes(toReactFlowNodes(prevSetListState));
+    setEdges(toReactFlowEdges(prevSetListState));
+  }, [prevSetListState]);
+
+  console.log("MOUNT", setList, nodes, edges);
 
   const { dragType } = useDnD();
   const onDragOver = useCallback((event: DragEvent) => {
@@ -75,7 +79,6 @@ function SetListComponent() {
     },
     [flowInstance.screenToFlowPosition, dragType, nodes]
   );
-
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -83,25 +86,21 @@ function SetListComponent() {
 
   useEffect(() => {
     if (setList) {
-      console.log("updating set list");
+      console.log("updating set list", setList);
       setSetList({
         ...setList,
-        tracks: nodes.map((n, idx) => {
-          return {
-            nodeId: n.id,
-            position: n.position,
-            title: n.data.title,
-            artist: n.data.artist,
-            spotifyTrack: n.data.spotifyTrack,
-          };
-        }),
-        edges: edges.map((e, idx) => {
-          return {
-            edgeId: e.id,
-            source: e.source,
-            target: e.target,
-          };
-        }),
+        tracks: nodes.map((n) => ({
+          nodeId: n.id,
+          position: n.position,
+          title: n.data.title,
+          artist: n.data.artist,
+          spotifyTrack: n.data.spotifyTrack,
+        })),
+        edges: edges.map((e) => ({
+          edgeId: e.id,
+          source: e.source,
+          target: e.target,
+        })),
       });
       return;
     }
