@@ -39,10 +39,10 @@ function SetListComponent() {
   const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<TrackData>>(
-    toReactFlowNodes(setList)
+    toReactFlowNodes(prevSetListState)
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
-    toReactFlowEdges(setList)
+    toReactFlowEdges(prevSetListState)
   );
 
   useEffect(() => {

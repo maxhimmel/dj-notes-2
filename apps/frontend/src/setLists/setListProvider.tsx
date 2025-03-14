@@ -34,20 +34,20 @@ export default function SetListProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     console.log("SLP", { id });
 
-    (async () => {
-      if (id) {
+    if (!id) {
+      console.log("SLP", "reset");
+      setSetList(undefined);
+      setPrevSetListState(undefined);
+    } else {
+      (async () => {
         if (!prevSetListState) {
           const setList = (await getSet.fetch({ id }))?.setList;
           console.log("SLP", "setting initial set list", setList);
           setSetList(setList);
           setPrevSetListState(setList);
         }
-      } else {
-        console.log("SLP", "reset");
-        setSetList(undefined);
-        setPrevSetListState(undefined);
-      }
-    })();
+      })();
+    }
   }, [id]);
 
   return (
