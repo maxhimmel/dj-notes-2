@@ -34,12 +34,13 @@ export default function Component() {
 function SetListComponent() {
   const flowInstance = useReactFlow();
   const flowWrapper = useRef<HTMLDivElement>(null);
-  const { setList, setSetList } = useSetList();
+  const { setList, setSetList, prevSetListState } = useSetList();
 
   const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
   // const initialSetList = setList;
   // const [setList, setSetList] = useState<SetList | undefined>(initialSetList);
+  console.log("MOUNT", setList);
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<TrackData>>(
     toReactFlowNodes(setList)
   );
@@ -60,13 +61,12 @@ function SetListComponent() {
         return;
       }
 
-      const position = flowInstance.screenToFlowPosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
       const newNode: TrackType = {
         id: nodes.length.toString(),
-        position,
+        position: flowInstance.screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        }),
         type: "track",
         data: dragType.data,
       };
@@ -76,56 +76,41 @@ function SetListComponent() {
     [flowInstance.screenToFlowPosition, dragType, nodes]
   );
 
-  // useEffect(() => {
-  //   if (setList) {
-  //     setSetList({
-  //       ...setList,
-  //       tracks: nodes.map((n) => {
-  //         return {
-  //           id: n.data.id,
-  //           nodeId: n.id,
-  //           position: { ...n.position, id: "" },
-  //           title: n.data.title,
-  //           artist: n.data.artist,
-  //           spotifyTrack: n.data.spotifyTrack,
-  //         };
-  //       }),
-  //       edges: edges.map((e) => {
-  //         return {
-  //           id: "",
-  //           edgeId: e.id,
-  //           source: e.source,
-  //           target: e.target,
-  //         };
-  //       }),
-  //     });
-  //     return;
-  //   }
-
-  //   (async () => {
-  //     const setList = await getSet.data?.setList;
-  //     setSetList(setList);
-  //     setNodes(toReactFlowNodes(setList));
-  //     setEdges(toReactFlowEdges(setList));
-
-  //     setSetList(setList);
-  //     // navigate(location.pathname, { state: setList });
-  //   })();
-  // }, [nodes, edges]);
-
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
+  useEffect(() => {
+    if (setList) {
+      console.log("updating set list");
+      setSetList({
+        ...setList,
+        tracks: nodes.map((n, idx) => {
+          return {
+            nodeId: n.id,
+            position: n.position,
+            title: n.data.title,
+            artist: n.data.artist,
+            spotifyTrack: n.data.spotifyTrack,
+          };
+        }),
+        edges: edges.map((e, idx) => {
+          return {
+            edgeId: e.id,
+            source: e.source,
+            target: e.target,
+          };
+        }),
+      });
+      return;
+    }
+  }, [nodes, edges]);
+
   return (
     <div className="relative flex grow">
       <div className="flex flex-col grow" ref={flowWrapper}>
-        <FileBar
-          originalSetList={undefined}
-          setList={setList}
-          setSetList={setSetList}
-        />
+        <FileBar />
         <div className="relative flex grow h-full">
           <ReactFlow
             colorMode="dark"

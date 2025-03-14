@@ -16,6 +16,10 @@ const defaultState = {
   setSetList: (setList: SetListQuery) => {
     // This is assigned in the provider
   },
+  prevSetListState: undefined as SetListQuery,
+  setPrevSetListState: (setList: SetListQuery) => {
+    // This is assigned in the provider
+  },
 };
 const context = createContext(defaultState);
 
@@ -24,17 +28,35 @@ export const useSetList = () => useContext(context);
 export default function SetListProvider({ children }: PropsWithChildren) {
   const { id } = useParams<"id">();
   const [setList, setSetList] = useState<SetListQuery>();
-  const getSet = trpc.setLists.getSet.useQuery({ id }, { enabled: !!id });
+  const [prevSetListState, setPrevSetListState] = useState<SetListQuery>();
+  const getSet = trpc.useUtils().setLists.getSet;
 
   useEffect(() => {
-    setSetList(getSet.data?.setList);
-  }, [getSet.data, id]);
+    console.log("SLP", { id });
+
+    (async () => {
+      if (id) {
+        if (!prevSetListState) {
+          const setList = (await getSet.fetch({ id }))?.setList;
+          console.log("SLP", "setting initial set list", setList);
+          setSetList(setList ? { ...setList } : undefined);
+          setPrevSetListState(setList);
+        }
+      } else {
+        console.log("SLP", "reset");
+        setSetList(undefined);
+        setPrevSetListState(undefined);
+      }
+    })();
+  }, [id]);
 
   return (
     <context.Provider
       value={{
         setList,
         setSetList,
+        prevSetListState,
+        setPrevSetListState,
       }}
     >
       {children}
