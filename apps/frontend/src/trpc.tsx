@@ -9,9 +9,7 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
-        // TODO: Move these into .env vars?
-        httpBatchLink({ url: "http://localhost:4200/api" }), //frontend dev
-        httpBatchLink({ url: "https://dj-notes-2.onrender.com/api" }), //prod
+        httpBatchLink({ url: `${import.meta.env["VITE_DOMAIN_URL"]}/api` }),
       ],
       transformer: superjson,
     })
