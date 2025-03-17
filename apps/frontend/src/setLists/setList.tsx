@@ -66,7 +66,10 @@ function SetListComponent() {
       }
 
       const newNode: TrackType = {
-        id: nodes.length.toString(),
+        id: (nodes.length > 0
+          ? Number.parseInt(nodes[nodes.length - 1].id) + 1
+          : 0
+        ).toString(),
         position: flowInstance.screenToFlowPosition({
           x: event.clientX,
           y: event.clientY,
