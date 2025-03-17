@@ -50,8 +50,6 @@ function SetListComponent() {
     setEdges(toReactFlowEdges(prevSetListState));
   }, [prevSetListState]);
 
-  console.log("MOUNT", setList, nodes, edges);
-
   const { dragType } = useDnD();
   const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
@@ -89,7 +87,6 @@ function SetListComponent() {
 
   useEffect(() => {
     if (setList) {
-      console.log("updating set list", setList);
       setSetList({
         ...setList,
         tracks: nodes.map((n) => ({

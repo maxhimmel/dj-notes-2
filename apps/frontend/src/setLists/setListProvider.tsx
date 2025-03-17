@@ -32,17 +32,13 @@ export default function SetListProvider({ children }: PropsWithChildren) {
   const getSet = trpc.useUtils().setLists.getSet;
 
   useEffect(() => {
-    console.log("SLP", { id });
-
     if (!id) {
-      console.log("SLP", "reset");
       setSetList(undefined);
       setPrevSetListState(undefined);
     } else {
       (async () => {
         if (!prevSetListState) {
           const setList = (await getSet.fetch({ id }))?.setList;
-          console.log("SLP", "setting initial set list", setList);
           setSetList(setList);
           setPrevSetListState(setList);
         }
