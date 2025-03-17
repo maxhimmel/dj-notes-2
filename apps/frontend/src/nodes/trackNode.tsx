@@ -8,7 +8,7 @@ export default function TrackNode({
   id,
   selected,
 }: NodeProps<TrackType>) {
-  return data.spotifyData ? (
+  return data.spotifyTrack ? (
     <SpotifyNode data={data} id={id} selected={selected} />
   ) : (
     <UserNode data={data} id={id} selected={selected} />

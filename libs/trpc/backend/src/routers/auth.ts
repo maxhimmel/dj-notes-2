@@ -13,7 +13,7 @@ const CONFIG: ExpressAuthConfig = {
   adapter: PrismaAdapter(prisma),
   callbacks: {
     session: ({ session }) => session,
-    redirect: ({ url, baseUrl }) => process.env["DOMAIN_URL"] as string,
+    redirect: ({ url, baseUrl }) => process.env["VITE_DOMAIN_URL"] as string,
   },
 };
 

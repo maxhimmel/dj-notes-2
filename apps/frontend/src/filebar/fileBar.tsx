@@ -1,23 +1,16 @@
-import { SetList } from "@dj-notes-2/shared";
 import { trpc } from "@trpc/frontend";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router";
+import { useSetList } from "../setLists/setListProvider";
 import { isEqual } from "./fileService";
 import Notification from "./notification";
 
 type FileState = "saved" | "saving" | "changed" | "";
 
-export function FileBar(props: {
-  originalSetList: SetList | undefined;
-  setList: SetList | undefined;
-  setSetList: (setList: SetList) => void;
-}) {
-  const { originalSetList, setList } = props;
-
+export function FileBar() {
+  const { setList, setSetList, prevSetListState, setPrevSetListState } =
+    useSetList();
   const updateSetList = trpc.setLists.update.useMutation();
-  const navigate = useNavigate();
-  const location = useLocation();
   const [fileState, setFileState] = useState<FileState>("");
 
   useEffect(() => {
@@ -25,16 +18,19 @@ export function FileBar(props: {
       evt.preventDefault();
     }
 
-    if (originalSetList && setList) {
-      if (!isEqual(originalSetList, setList)) {
+    if (prevSetListState && setList) {
+      if (!isEqual(prevSetListState, setList)) {
         setFileState("changed");
         window.addEventListener("beforeunload", handlePreventWindowClose);
+      } else {
+        setFileState("");
+        window.removeEventListener("beforeunload", handlePreventWindowClose);
       }
     }
 
     return () =>
       window.removeEventListener("beforeunload", handlePreventWindowClose);
-  }, [setList, originalSetList]);
+  }, [setList, prevSetListState]);
 
   async function handleSave(evt: FormEvent) {
     if (!setList) {
@@ -44,13 +40,16 @@ export function FileBar(props: {
     evt.preventDefault();
 
     setFileState("saving");
-    const savedSetList = await updateSetList.mutateAsync({
+    const { id, userId, ...payload } = setList;
+    const { setList: savedSetList } = await updateSetList.mutateAsync({
       id: setList.id,
-      setList,
+      setList: payload,
     });
 
     setFileState("saved");
-    navigate(location.pathname, { state: savedSetList }); // Reset location state
+    setSetList(savedSetList);
+    setPrevSetListState(savedSetList);
+    // navigate(location.pathname, { state: savedSetList }); // Reset location state
   }
 
   function handleNameChange(evt: ChangeEvent<HTMLInputElement>) {
@@ -58,7 +57,7 @@ export function FileBar(props: {
       return;
     }
 
-    props.setSetList({
+    setSetList({
       ...setList,
       [evt.target.name]: evt.target.value,
     });

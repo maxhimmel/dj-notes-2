@@ -1,6 +1,5 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { useSession } from "../auth/sessionProvider";
-import { Link } from "react-router";
 import { SetListSample } from "./setListSample";
 
 export default function Home() {

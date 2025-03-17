@@ -1,5 +1,4 @@
 import { SetList } from "@dj-notes-2/shared";
-import { trpc } from "@trpc/frontend";
 import {
   addEdge,
   Background,
@@ -14,21 +13,13 @@ import {
   useNodesState,
   useReactFlow,
 } from "@xyflow/react";
-import {
-  DragEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { DragEvent, useCallback, useEffect, useMemo, useRef } from "react";
 import DnDProvider, { useDnD } from "../dragDrop/dndProvider";
 import { FileBar } from "../filebar/fileBar";
 import { TrackData, TrackType } from "../nodes/trackData";
 import TrackNode from "../nodes/trackNode";
-import UserTrackNode from "../nodes/userNode";
-import { SideBar } from "./sidebar";
+import { useSetList } from "./setListProvider";
+import { SideBar } from "./sideBar";
 
 export default function Component() {
   return (
@@ -43,23 +34,23 @@ export default function Component() {
 function SetListComponent() {
   const flowInstance = useReactFlow();
   const flowWrapper = useRef<HTMLDivElement>(null);
+  const { setList, setSetList, prevSetListState } = useSetList();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
-  const initialSetList = location.state as SetList | undefined;
-  const [setList, setSetList] = useState<SetList | undefined>(initialSetList);
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<TrackData>>(
-    setList ? toReactFlowNodes(setList) : []
+    toReactFlowNodes(prevSetListState)
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
-    setList ? toReactFlowEdges(setList) : []
+    toReactFlowEdges(prevSetListState)
   );
 
-  const { id } = useParams<"id">();
-  const getSet = trpc.setLists.getSet.useQuery({ id: id as string });
+  useEffect(() => {
+    setNodes(toReactFlowNodes(prevSetListState));
+    setEdges(toReactFlowEdges(prevSetListState));
+  }, [prevSetListState]);
 
-  const { type: dragType } = useDnD();
+  const { dragType } = useDnD();
   const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -72,79 +63,53 @@ function SetListComponent() {
         return;
       }
 
-      const position = flowInstance.screenToFlowPosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
-      const newNode: Node<TrackData> = {
-        id: nodes.length.toString(),
-        position,
+      const newNode: TrackType = {
+        id: (nodes.length > 0
+          ? Number.parseInt(nodes[nodes.length - 1].id) + 1
+          : 0
+        ).toString(),
+        position: flowInstance.screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        }),
         type: "track",
-        data: dragType.data as TrackData,
+        data: dragType.data,
       };
 
       setNodes([...nodes, newNode]);
     },
     [flowInstance.screenToFlowPosition, dragType, nodes]
   );
-
-  useEffect(() => {
-    if (setList) {
-      setSetList({
-        ...setList,
-        tracks: nodes.map((n) => {
-          return {
-            id: n.data.id,
-            nodeId: n.id,
-            position: { ...n.position, id: "" },
-            title: n.data.title,
-            artist: n.data.artist,
-            spotifyTrack: n.data.spotifyTrack,
-          };
-        }),
-        edges: edges.map((e) => {
-          return {
-            id: "",
-            edgeId: e.id,
-            source: e.source,
-            target: e.target,
-          };
-        }),
-      });
-      return;
-    }
-
-    (async () => {
-      const setList = await getSet.data?.setList;
-      setSetList(setList);
-      setNodes(toReactFlowNodes(setList));
-      setEdges(toReactFlowEdges(setList));
-
-      navigate(location.pathname, { state: setList });
-    })();
-  }, [nodes, edges]);
-
-  const nodeTypes = useMemo(
-    () => ({
-      userTrack: UserTrackNode,
-      track: TrackNode,
-    }),
-    []
-  );
-
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
+  useEffect(() => {
+    if (setList) {
+      setSetList({
+        ...setList,
+        tracks: nodes.map((n) => ({
+          nodeId: n.id,
+          position: n.position,
+          title: n.data.title,
+          artist: n.data.artist,
+          spotifyTrack: n.data.spotifyTrack,
+        })),
+        edges: edges.map((e) => ({
+          edgeId: e.id,
+          source: e.source,
+          target: e.target,
+        })),
+      });
+      return;
+    }
+  }, [nodes, edges]);
+
   return (
     <div className="relative flex grow">
       <div className="flex flex-col grow" ref={flowWrapper}>
-        <FileBar
-          originalSetList={initialSetList}
-          setList={setList}
-          setSetList={setSetList}
-        />
+        <FileBar />
         <div className="relative flex grow h-full">
           <ReactFlow
             colorMode="dark"

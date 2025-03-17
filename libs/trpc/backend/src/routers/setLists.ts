@@ -27,8 +27,12 @@ export const setListRouter = createRouter({
   }),
 
   getSet: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.string().optional() }))
     .query(async ({ ctx, input }) => {
+      if (!input.id) {
+        return null;
+      }
+
       const user = ctx.session.user;
       const setList = await ctx.db.setList.findUniqueOrThrow({
         where: { id: input.id, userId: user.id },

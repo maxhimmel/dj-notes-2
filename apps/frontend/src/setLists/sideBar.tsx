@@ -1,16 +1,16 @@
 import { Track } from "@spotify/web-api-ts-sdk";
+import { trpc } from "@trpc/frontend";
 import { ChangeEvent, DragEvent, FormEvent, useState } from "react";
 import { BsVinylFill } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 import { useDnD } from "../dragDrop/dndProvider";
-import { trpc } from "@trpc/frontend";
 
 export function SideBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Track[]>([]);
   const [isPending, setIsPending] = useState(false);
-  const searchTrack = trpc.tracks.search.useQuery({ query });
+  const searchTrack = trpc.useUtils().tracks.search;
 
   async function handleSearch(evt: FormEvent) {
     evt.preventDefault();
@@ -18,7 +18,7 @@ export function SideBar() {
     setIsPending(true);
     setResults([]);
 
-    const results = (await searchTrack.data?.tracks) ?? [];
+    const results = (await searchTrack.fetch({ query })).tracks;
 
     setIsPending(false);
     setResults(results);
@@ -139,7 +139,14 @@ function CustomEntry() {
   const { setType } = useDnD();
 
   function onDragStart(event: DragEvent) {
-    setType({ data: null });
+    setType({
+      data: {
+        id: "",
+        artist: "",
+        title: "",
+        spotifyTrack: null,
+      },
+    });
     event.dataTransfer.effectAllowed = "move";
   }
 
