@@ -45,10 +45,8 @@ export default function SetListProvider({ children }: PropsWithChildren) {
       initializeSetList(undefined);
     } else if (!setList) {
       (async () => {
-        console.log("Querying setlist by:", id);
         const setList = (await getSet.fetch({ id }))?.setList;
         initializeSetList(setList);
-        console.log("Set setlist to:", setList);
       })();
     }
   }, [id]);

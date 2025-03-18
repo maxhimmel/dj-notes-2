@@ -46,9 +46,7 @@ function SetListComponent() {
   );
   const [isInitialized, setIsInitialized] = useState(setList !== undefined);
   useEffect(() => {
-    console.log("Set list state changed", { isInitialized }, { setList });
     if (!isInitialized && setList) {
-      console.log("Init setlist nodes/edges");
       setIsInitialized(true);
       setNodes(toReactFlowNodes(setList));
       setEdges(toReactFlowEdges(setList));
@@ -92,9 +90,7 @@ function SetListComponent() {
   );
 
   useEffect(() => {
-    console.log("react-flow nodes or edges changed");
     if (setList) {
-      console.log("Updating set list state");
       updateSetList({
         ...setList,
         tracks: nodes.map((n) => ({
