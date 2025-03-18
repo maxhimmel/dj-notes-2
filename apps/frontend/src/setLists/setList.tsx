@@ -13,14 +13,7 @@ import {
   useNodesState,
   useReactFlow,
 } from "@xyflow/react";
-import {
-  DragEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { DragEvent, useCallback, useEffect, useMemo, useState } from "react";
 import DnDProvider, { useDnD } from "../dragDrop/dndProvider";
 import { FileBar } from "../filebar/fileBar";
 import { TrackData, TrackType } from "../nodes/trackData";
