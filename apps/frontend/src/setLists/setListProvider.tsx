@@ -13,11 +13,11 @@ type SetListQuery = SetList | undefined;
 
 const defaultState = {
   setList: undefined as SetListQuery,
-  setSetList: (setList: SetListQuery) => {
+  updateSetList: (setList: SetListQuery) => {
     // This is assigned in the provider
   },
-  prevSetListState: undefined as SetListQuery,
-  setPrevSetListState: (setList: SetListQuery) => {
+  initialSetList: undefined as SetListQuery,
+  initializeSetList: (setList: SetListQuery) => {
     // This is assigned in the provider
   },
 };
@@ -28,20 +28,27 @@ export const useSetList = () => useContext(context);
 export default function SetListProvider({ children }: PropsWithChildren) {
   const { id } = useParams<"id">();
   const [setList, setSetList] = useState<SetListQuery>();
-  const [prevSetListState, setPrevSetListState] = useState<SetListQuery>();
+  const [initialSetList, setInitialSetList] = useState<SetListQuery>();
   const getSet = trpc.useUtils().setLists.getSet;
+
+  function initializeSetList(setList: SetListQuery) {
+    updateSetList(setList);
+    setInitialSetList(setList);
+  }
+
+  function updateSetList(setList: SetListQuery) {
+    setSetList(setList);
+  }
 
   useEffect(() => {
     if (!id) {
-      setSetList(undefined);
-      setPrevSetListState(undefined);
-    } else {
+      initializeSetList(undefined);
+    } else if (!setList) {
       (async () => {
-        if (!prevSetListState) {
-          const setList = (await getSet.fetch({ id }))?.setList;
-          setSetList(setList);
-          setPrevSetListState(setList);
-        }
+        console.log("Querying setlist by:", id);
+        const setList = (await getSet.fetch({ id }))?.setList;
+        initializeSetList(setList);
+        console.log("Set setlist to:", setList);
       })();
     }
   }, [id]);
@@ -50,9 +57,9 @@ export default function SetListProvider({ children }: PropsWithChildren) {
     <context.Provider
       value={{
         setList,
-        setSetList,
-        prevSetListState,
-        setPrevSetListState,
+        updateSetList,
+        initialSetList,
+        initializeSetList,
       }}
     >
       {children}

@@ -13,7 +13,14 @@ import {
   useNodesState,
   useReactFlow,
 } from "@xyflow/react";
-import { DragEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  DragEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import DnDProvider, { useDnD } from "../dragDrop/dndProvider";
 import { FileBar } from "../filebar/fileBar";
 import { TrackData, TrackType } from "../nodes/trackData";
@@ -33,23 +40,29 @@ export default function Component() {
 
 function SetListComponent() {
   const flowInstance = useReactFlow();
-  const flowWrapper = useRef<HTMLDivElement>(null);
-  const { setList, setSetList, prevSetListState } = useSetList();
+  const { setList, updateSetList } = useSetList();
 
   const nodeTypes = useMemo(() => ({ track: TrackNode }), []);
 
+  // Init react-flow nodes and edges
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<TrackData>>(
-    toReactFlowNodes(prevSetListState)
+    toReactFlowNodes(setList)
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
-    toReactFlowEdges(prevSetListState)
+    toReactFlowEdges(setList)
   );
-
+  const [isInitialized, setIsInitialized] = useState(setList !== undefined);
   useEffect(() => {
-    setNodes(toReactFlowNodes(prevSetListState));
-    setEdges(toReactFlowEdges(prevSetListState));
-  }, [prevSetListState]);
+    console.log("Set list state changed", { isInitialized }, { setList });
+    if (!isInitialized && setList) {
+      console.log("Init setlist nodes/edges");
+      setIsInitialized(true);
+      setNodes(toReactFlowNodes(setList));
+      setEdges(toReactFlowEdges(setList));
+    }
+  }, [setList]);
 
+  // Create react-flow callbacks for updating the graph
   const { dragType } = useDnD();
   const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
@@ -86,8 +99,10 @@ function SetListComponent() {
   );
 
   useEffect(() => {
+    console.log("react-flow nodes or edges changed");
     if (setList) {
-      setSetList({
+      console.log("Updating set list state");
+      updateSetList({
         ...setList,
         tracks: nodes.map((n) => ({
           nodeId: n.id,
@@ -108,7 +123,7 @@ function SetListComponent() {
 
   return (
     <div className="relative flex grow">
-      <div className="flex flex-col grow" ref={flowWrapper}>
+      <div className="flex flex-col grow">
         <FileBar />
         <div className="relative flex grow h-full">
           <ReactFlow

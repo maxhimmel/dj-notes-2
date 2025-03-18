@@ -8,8 +8,12 @@ import Notification from "./notification";
 type FileState = "saved" | "saving" | "changed" | "";
 
 export function FileBar() {
-  const { setList, setSetList, prevSetListState, setPrevSetListState } =
-    useSetList();
+  const {
+    setList,
+    updateSetList: setSetList,
+    initialSetList,
+    initializeSetList,
+  } = useSetList();
   const updateSetList = trpc.setLists.update.useMutation();
   const [fileState, setFileState] = useState<FileState>("");
 
@@ -18,8 +22,8 @@ export function FileBar() {
       evt.preventDefault();
     }
 
-    if (prevSetListState && setList) {
-      if (!isEqual(prevSetListState, setList)) {
+    if (initialSetList && setList) {
+      if (!isEqual(initialSetList, setList)) {
         setFileState("changed");
         window.addEventListener("beforeunload", handlePreventWindowClose);
       } else {
@@ -30,7 +34,7 @@ export function FileBar() {
 
     return () =>
       window.removeEventListener("beforeunload", handlePreventWindowClose);
-  }, [setList, prevSetListState]);
+  }, [setList, initialSetList]);
 
   async function handleSave(evt: FormEvent) {
     if (!setList) {
@@ -47,9 +51,7 @@ export function FileBar() {
     });
 
     setFileState("saved");
-    setSetList(savedSetList);
-    setPrevSetListState(savedSetList);
-    // navigate(location.pathname, { state: savedSetList }); // Reset location state
+    initializeSetList(savedSetList);
   }
 
   function handleNameChange(evt: ChangeEvent<HTMLInputElement>) {

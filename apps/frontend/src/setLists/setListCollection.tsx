@@ -62,7 +62,7 @@ export default function SetListCollection() {
 
 function NewSetListButton() {
   const navigate = useNavigate();
-  const { setSetList, setPrevSetListState } = useSetList();
+  const { initializeSetList } = useSetList();
   const createSetList = trpc.setLists.create.useMutation();
 
   async function handleNewSetList() {
@@ -70,8 +70,7 @@ function NewSetListButton() {
       name: "New Set List",
     });
 
-    setSetList(setList);
-    setPrevSetListState(setList);
+    initializeSetList(setList);
     navigate(`/setlists/${setList.id}`);
   }
   return (
@@ -105,11 +104,10 @@ function SetListEntry(props: {
   deleteSet: (id: string) => Promise<void>;
 }) {
   const navigate = useNavigate();
-  const { setSetList, setPrevSetListState } = useSetList();
+  const { initializeSetList } = useSetList();
 
   function handleEdit() {
-    setSetList(props.entry);
-    setPrevSetListState(props.entry);
+    initializeSetList(props.entry);
     navigate(`/setlists/${props.entry.id}`);
   }
 
