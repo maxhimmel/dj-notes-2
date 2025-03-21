@@ -1,6 +1,6 @@
+import { SetListUncheckedCreateInputSchema } from "@dj-notes-2/shared";
 import { z } from "zod";
 import { createRouter, protectedProcedure } from "../trpc";
-import { SetListUpdateInputSchema } from "@dj-notes-2/shared";
 
 export const setListRouter = createRouter({
   create: protectedProcedure
@@ -53,12 +53,17 @@ export const setListRouter = createRouter({
     }),
 
   update: protectedProcedure
-    .input(z.object({ id: z.string(), setList: SetListUpdateInputSchema }))
+    .input(
+      z.object({
+        setList: SetListUncheckedCreateInputSchema,
+      })
+    )
     .mutation(async ({ ctx, input }) => {
+      const { id, createdAt, updatedAt, ...data } = input.setList;
       const user = ctx.session.user;
       const setList = await ctx.db.setList.update({
-        where: { id: input.id, userId: user.id },
-        data: input.setList,
+        where: { id, userId: user.id },
+        data,
       });
 
       return { setList };
