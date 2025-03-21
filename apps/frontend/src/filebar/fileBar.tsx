@@ -1,4 +1,3 @@
-import { trpc } from "@trpc/frontend";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { useSetList } from "../setLists/setListProvider";
@@ -8,13 +7,7 @@ import Notification from "./notification";
 type FileState = "saved" | "saving" | "changed" | "";
 
 export function FileBar() {
-  const {
-    setList,
-    updateSetList: setSetList,
-    initialSetList,
-    initializeSetList,
-  } = useSetList();
-  const updateSetList = trpc.setLists.update.useMutation();
+  const { setList, draftSetList, setDraftSetList, saveDraft } = useSetList();
   const [fileState, setFileState] = useState<FileState>("");
 
   useEffect(() => {
@@ -22,8 +15,8 @@ export function FileBar() {
       evt.preventDefault();
     }
 
-    if (initialSetList && setList) {
-      if (!isEqual(initialSetList, setList)) {
+    if (draftSetList && setList) {
+      if (!isEqual(draftSetList, setList)) {
         setFileState("changed");
         window.addEventListener("beforeunload", handlePreventWindowClose);
       } else {
@@ -34,7 +27,7 @@ export function FileBar() {
 
     return () =>
       window.removeEventListener("beforeunload", handlePreventWindowClose);
-  }, [setList, initialSetList]);
+  }, [setList, draftSetList]);
 
   async function handleSave(evt: FormEvent) {
     if (!setList) {
@@ -44,14 +37,8 @@ export function FileBar() {
     evt.preventDefault();
 
     setFileState("saving");
-    const { id, userId, ...payload } = setList;
-    const { setList: savedSetList } = await updateSetList.mutateAsync({
-      id: setList.id,
-      setList: payload,
-    });
-
+    await saveDraft();
     setFileState("saved");
-    initializeSetList(savedSetList);
   }
 
   function handleNameChange(evt: ChangeEvent<HTMLInputElement>) {
@@ -59,7 +46,7 @@ export function FileBar() {
       return;
     }
 
-    setSetList({
+    setDraftSetList({
       ...setList,
       [evt.target.name]: evt.target.value,
     });
