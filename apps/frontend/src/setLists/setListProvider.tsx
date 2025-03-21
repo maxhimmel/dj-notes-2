@@ -61,23 +61,6 @@ export default function SetListProvider({
     }
   }, [setList.data.setList]);
 
-  console.table([
-    {
-      name: "initialSetListData",
-      id: initialSetListData?.id,
-      updatedAt: initialSetListData?.updatedAt.getMilliseconds(),
-    },
-    {
-      name: "setList.data",
-      id: setList.data.setList.id,
-      updatedAt: setList.data.setList.updatedAt.getMilliseconds(),
-    },
-    {
-      name: "draft",
-      id: draftSetList.id,
-      updatedAt: draftSetList.updatedAt.getMilliseconds(),
-    },
-  ]);
   return (
     <context.Provider
       value={{
