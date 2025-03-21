@@ -1,4 +1,3 @@
-import { trpc } from "@trpc/frontend";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { useSetList } from "../setLists/setListProvider";
@@ -8,9 +7,7 @@ import Notification from "./notification";
 type FileState = "saved" | "saving" | "changed" | "";
 
 export function FileBar() {
-  const { setList, setSetList, prevSetListState, setPrevSetListState } =
-    useSetList();
-  const updateSetList = trpc.setLists.update.useMutation();
+  const { setList, draftSetList, setDraftSetList, saveDraft } = useSetList();
   const [fileState, setFileState] = useState<FileState>("");
 
   useEffect(() => {
@@ -18,8 +15,8 @@ export function FileBar() {
       evt.preventDefault();
     }
 
-    if (prevSetListState && setList) {
-      if (!isEqual(prevSetListState, setList)) {
+    if (draftSetList && setList) {
+      if (!isEqual(draftSetList, setList)) {
         setFileState("changed");
         window.addEventListener("beforeunload", handlePreventWindowClose);
       } else {
@@ -30,7 +27,7 @@ export function FileBar() {
 
     return () =>
       window.removeEventListener("beforeunload", handlePreventWindowClose);
-  }, [setList, prevSetListState]);
+  }, [setList, draftSetList]);
 
   async function handleSave(evt: FormEvent) {
     if (!setList) {
@@ -40,16 +37,8 @@ export function FileBar() {
     evt.preventDefault();
 
     setFileState("saving");
-    const { id, userId, ...payload } = setList;
-    const { setList: savedSetList } = await updateSetList.mutateAsync({
-      id: setList.id,
-      setList: payload,
-    });
-
+    await saveDraft();
     setFileState("saved");
-    setSetList(savedSetList);
-    setPrevSetListState(savedSetList);
-    // navigate(location.pathname, { state: savedSetList }); // Reset location state
   }
 
   function handleNameChange(evt: ChangeEvent<HTMLInputElement>) {
@@ -57,7 +46,7 @@ export function FileBar() {
       return;
     }
 
-    setSetList({
+    setDraftSetList({
       ...setList,
       [evt.target.name]: evt.target.value,
     });

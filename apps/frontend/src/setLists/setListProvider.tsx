@@ -7,55 +7,81 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useParams } from "react-router";
 
 type SetListQuery = SetList | undefined;
 
-const defaultState = {
-  setList: undefined as SetListQuery,
-  setSetList: (setList: SetListQuery) => {
-    // This is assigned in the provider
+const context = createContext<{
+  setList: SetListQuery;
+  draftSetList: SetList;
+  setDraftSetList: (setList: SetList) => void;
+  saveDraft: () => Promise<void>;
+}>({
+  setList: undefined,
+  draftSetList: undefined as unknown as SetList,
+  setDraftSetList: () => {
+    return;
   },
-  prevSetListState: undefined as SetListQuery,
-  setPrevSetListState: (setList: SetListQuery) => {
-    // This is assigned in the provider
-  },
-};
-const context = createContext(defaultState);
+  saveDraft: () => Promise.resolve(),
+});
 
 export const useSetList = () => useContext(context);
 
-export default function SetListProvider({ children }: PropsWithChildren) {
-  const { id } = useParams<"id">();
-  const [setList, setSetList] = useState<SetListQuery>();
-  const [prevSetListState, setPrevSetListState] = useState<SetListQuery>();
-  const getSet = trpc.useUtils().setLists.getSet;
+export default function SetListProvider({
+  children,
+  initialSetListData,
+  id,
+}: PropsWithChildren & {
+  initialSetListData: SetList | undefined;
+  id: string;
+}) {
+  const setList = trpc.setLists.getSet.useQuery(
+    { id },
+    {
+      initialData: initialSetListData
+        ? { setList: initialSetListData }
+        : undefined,
+    }
+  );
+
+  const updateSetList = trpc.setLists.update.useMutation();
+
+  if (setList.isFetching && !setList.data) {
+    return <div>Loading</div>;
+  }
+
+  if (!setList.data) {
+    throw new Error();
+  }
+
+  const [draftSetList, setDraftSetList] = useState(setList.data.setList);
 
   useEffect(() => {
-    if (!id) {
-      setSetList(undefined);
-      setPrevSetListState(undefined);
-    } else {
-      (async () => {
-        if (!prevSetListState) {
-          const setList = (await getSet.fetch({ id }))?.setList;
-          setSetList(setList);
-          setPrevSetListState(setList);
-        }
-      })();
+    if (setList.data?.setList) {
+      setDraftSetList(setList.data.setList);
     }
-  }, [id]);
+  }, [setList.data.setList]);
 
   return (
     <context.Provider
       value={{
-        setList,
-        setSetList,
-        prevSetListState,
-        setPrevSetListState,
+        setList: setList.data?.setList,
+        draftSetList,
+        setDraftSetList,
+        saveDraft,
       }}
     >
       {children}
     </context.Provider>
   );
+
+  async function saveDraft() {
+    if (!draftSetList) {
+      return;
+    }
+
+    await updateSetList.mutateAsync({
+      setList: draftSetList,
+    });
+    await setList.refetch();
+  }
 }
