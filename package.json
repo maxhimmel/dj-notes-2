@@ -50,6 +50,7 @@
     "@swc/cli": "~0.3.12",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@tanstack/react-query-devtools": "^4.36.1",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.1.0",
     "@types/cors": "^2.8.17",
