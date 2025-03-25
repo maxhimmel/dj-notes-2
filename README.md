@@ -1,82 +1,71 @@
-# DjNotes2
+<div align="center" id="header">
+ 
+# Scratch Notes
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<div id="header" align="center">
+  <img src="https://i.imgur.com/gezKdM7.png" width="800" height="400">
+</div>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+**Created by [Max Himmel](https://www.linkedin.com/in/maxhimmel/)**
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+#### [DEMO HERE](https://dj-set-notes-8b9db6e17fd5.herokuapp.com/)
 
-## Finish your remote caching setup
+</div>
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/DtQsNpzHTA)
+## :pencil: Description
 
+This repository has been completely restructured to integrate industry-standard technologies, emulating the T3 stack. Notably, it incorporates Drizzle for efficient data management and tRPC for type-safe API calls, enhancing both developer experience and performance. The refactor brings modern best practices and a robust, scalable foundation to the project, aligning it with the latest trends in full-stack development.
 
-## Run tasks
+**Scratch Notes** is handy note taking app that helps design a potential set list for any occasion. Search Spotify, drag and drop tracks, then link them together!
 
-To run the dev server for your app, use:
+## :computer: Technologies Used
 
-```sh
-npx nx serve frontend
-```
+![TypeScript](https://img.shields.io/badge/-TypeScript-05122A?style=flat&logo=typescript)
+![Node.js](https://img.shields.io/badge/-Node-05122A?style=flat&logo=nodedotjs)
+![tRPC](https://img.shields.io/badge/-tRPC-05122A?style=flat&logo=trpc)
+![Drizzle](https://img.shields.io/badge/-Drizzle-05122A?style=flat&logo=drizzle)
+![MongoDB](https://img.shields.io/badge/-MongoDB-05122A?style=flat&logo=mongodb)
+![Express](https://img.shields.io/badge/-Express-05122A?style=flat&logo=express)
+![React](https://img.shields.io/badge/-React-05122A?style=flat&logo=react)
+![Nx](https://img.shields.io/badge/-Nx-05122A?style=flat&logo=nx)
+![daisyUI](https://img.shields.io/badge/-daisyUI-05122A?style=flat&logo=daisyUI)
+![Tailwind](https://img.shields.io/badge/-Tailwind%20CSS-05122A?style=flat&logo=tailwindcss)
+![Zod](https://img.shields.io/badge/-Zod-05122A?style=flat&logo=zod)
+![Spotify](https://img.shields.io/badge/-Spotify-05122A?style=flat&logo=spotify)
+![React Flow](https://img.shields.io/badge/React%20Flow-05122A.svg?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTU3IiBoZWlnaHQ9IjE1NyIgdmlld0JveD0iMCAwIDE1NyAxNTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTciIGhlaWdodD0iMTU3IiByeD0iMjEiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHg9Ijg4LjU2MjciIHk9Ijg4LjU2MiIgd2lkdGg9IjUxLjA0MTciIGhlaWdodD0iNTEuMDQxNyIgcng9IjcuMjkxNjciIGZpbGw9IndoaXRlIiBzdHJva2U9IiMxQTE5MkIiIHN0cm9rZS13aWR0aD0iNy4yOTE2NyIvPgo8cmVjdCB4PSI4OC41NjI3IiB5PSIxNS42NDU4IiB3aWR0aD0iNTEuMDQxNyIgaGVpZ2h0PSI1MS4wNDE3IiByeD0iNy4yOTE2NyIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI0ZGMDA3MiIgc3Ryb2tlLXdpZHRoPSI3LjI5MTY3Ii8+CjxyZWN0IHg9IjE1LjY0NTgiIHk9Ijg4LjU2MiIgd2lkdGg9IjUxLjA0MTciIGhlaWdodD0iNTEuMDQxNyIgcng9IjcuMjkxNjciIGZpbGw9IndoaXRlIiBzdHJva2U9IiMxQTE5MkIiIHN0cm9rZS13aWR0aD0iNy4yOTE2NyIvPgo8cmVjdCB4PSIxNS42NDYyIiB5PSIxNS42NDYzIiB3aWR0aD0iNTEuMDQxNyIgaGVpZ2h0PSI1MS4wNDE3IiByeD0iNy4yOTE2NyIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzFBMTkyQiIgc3Ryb2tlLXdpZHRoPSI3LjI5MTY3Ii8+CjxjaXJjbGUgY3g9IjY2LjY4NzEiIGN5PSI0MS4xNjY0IiByPSIxMC45Mzc1IiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSI4OC41NjI1IiBjeT0iNDEuMTY2NCIgcj0iMTAuOTM3NSIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iMTE0LjA4MyIgY3k9IjY2LjY4NzciIHI9IjEwLjkzNzUiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjExNC4wODMiIGN5PSI4OC41NjI1IiByPSIxMC45Mzc1IiBmaWxsPSJ3aGl0ZSIvPgo8Y2lyY2xlIGN4PSI2Ni42ODcxIiBjeT0iMTE0LjA4NCIgcj0iMTAuOTM3NSIgZmlsbD0id2hpdGUiLz4KPGNpcmNsZSBjeD0iODguNTYyNSIgY3k9IjExNC4wODQiIHI9IjEwLjkzNzUiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjExNC4wODQiIGN5PSI4OC41NjI2IiByPSI3LjI5MTY3IiBmaWxsPSIjMUExOTJCIi8+CjxjaXJjbGUgY3g9IjY2LjY4NjUiIGN5PSIxMTQuMDgzIiByPSI3LjI5MTY3IiBmaWxsPSIjMUExOTJCIi8+CjxjaXJjbGUgY3g9Ijg4LjU2MiIgY3k9IjExNC4wODMiIHI9IjcuMjkxNjciIGZpbGw9IiMxQTE5MkIiLz4KPHJlY3Qgb3BhY2l0eT0iMC4zNSIgeD0iNzAuMzMzMiIgeT0iMzkuMzQ0IiB3aWR0aD0iMTQuNTgzMyIgaGVpZ2h0PSIzLjY0NTg0IiBmaWxsPSIjMUExOTJCIi8+CjxyZWN0IG9wYWNpdHk9IjAuMzUiIHg9IjExMi4yNjEiIHk9IjgzLjA5MzYiIHdpZHRoPSIxNC41ODMzIiBoZWlnaHQ9IjMuNjQ1ODQiIHRyYW5zZm9ybT0icm90YXRlKC05MCAxMTIuMjYxIDgzLjA5MzYpIiBmaWxsPSIjMUExOTJCIi8+CjxyZWN0IG9wYWNpdHk9IjAuMzUiIHg9IjcwLjMzMzIiIHk9IjExMi4yNiIgd2lkdGg9IjE0LjU4MzMiIGhlaWdodD0iMy42NDU4NCIgZmlsbD0iIzFBMTkyQiIvPgo8Y2lyY2xlIGN4PSI2Ni42ODY1IiBjeT0iNDEuMTY2NSIgcj0iNy4yOTE2NyIgZmlsbD0iIzFBMTkyQiIvPgo8Y2lyY2xlIGN4PSI4OC41NjIiIGN5PSI0MS4xNjY1IiByPSI3LjI5MTY3IiBmaWxsPSIjRkYwMDcyIi8+CjxjaXJjbGUgY3g9IjExNC4wODQiIGN5PSI2Ni42ODc4IiByPSI3LjI5MTY3IiBmaWxsPSIjRkYwMDcyIi8+Cjwvc3ZnPgo=)
 
-To create a production bundle:
+## :art: References
 
-```sh
-npx nx build frontend
-```
+- [https://dj-notes-2.onrender.com/](https://dj-notes-2.onrender.com/)
 
-To see all available targets to run for a project, run:
+- [Original repo](https://github.com/maxhimmel/dj-set-notes)
 
-```sh
-npx nx show project frontend
-```
+- [Icons used from react-icons](https://react-icons.github.io/react-icons/)
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+- [HUGE shoutout to React Flow](https://reactflow.dev)
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## :fast_forward: Upcoming Features
 
-## Add new projects
+- [ ] Update the changes I made to the `Router Builder` in my [helper repo](https://github.com/maxhimmel/express-validation-router/blob/main/lib/routeBuilder.ts).
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+- [x] Do a major code cleanup inside the `SetList` component.
 
-Use the plugin's generator to create new projects.
+- [X] Cleanup the `FileBar` component and the save-state management.
 
-To generate a new application, use:
+- [ ] Determine a cleaner way to demo the set list on the Home page?
 
-```sh
-npx nx g @nx/react:app demo
-```
+- [ ] Smoother loading screen when entering the /setlists route.
 
-To generate a new library, use:
+- [X] Majorly cleanup the backend api routes that are using zod schemas.
 
-```sh
-npx nx g @nx/react:lib mylib
-```
+- [ ] Add undo/redo.
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+- [ ] Enable users to share their set lists.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [ ] Connect a user's Spotify account so they can reference their playlists.
 
+  - Perhaps this could be a tab on the side bar?
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [ ] "Are you sure you wanna delete this?" modal.
 
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [ ] Autosaving.
