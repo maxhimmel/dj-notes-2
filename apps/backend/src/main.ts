@@ -15,6 +15,7 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+app.set("trust proxy", true);
 app.use("/api/auth/*", authHandler);
 app.use(
   "/api",
