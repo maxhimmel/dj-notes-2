@@ -8,7 +8,7 @@
 
 **Created by [Max Himmel](https://www.linkedin.com/in/maxhimmel/)**
 
-#### [DEMO HERE](https://dj-notes-2.onrender.com/)
+#### [DEMO HERE](https://scratch-notes-539a6e946c42.herokuapp.com/)
 
 </div>
 
